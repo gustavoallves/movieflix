@@ -3,7 +3,7 @@ services:
     image: postgres:latest
     container_name: movieflixcontainer
     environment:
-      POSTGRES_DB: ${DB_USER}
+      POSTGRES_DB: movieflix
       POSTGRES_USER: ${DB_USER}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
     ports:
