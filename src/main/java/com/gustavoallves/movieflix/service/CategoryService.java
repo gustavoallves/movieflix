@@ -1,6 +1,9 @@
 package com.gustavoallves.movieflix.service;
 
+import com.gustavoallves.movieflix.controller.request.CategoryRequest;
+import com.gustavoallves.movieflix.controller.response.CategoryResponse;
 import com.gustavoallves.movieflix.entity.Category;
+import com.gustavoallves.movieflix.mapper.CategoryMapper;
 import com.gustavoallves.movieflix.repository.CategoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,16 +17,22 @@ public class CategoryService {
 
     private final CategoryRepository repository;
 
-    public Optional<Category> findById(Long id) {
-        return repository.findById(id);
+    public CategoryResponse saveCategory(CategoryRequest categoryRequest) {
+        Category category = CategoryMapper.toCategory(categoryRequest);
+        repository.save(category);
+        return CategoryMapper.toCategoryResponse(category);
     }
 
-    public List<Category> findAll() {
-        return repository.findAll();
+    public Optional<CategoryResponse> findById(Long id) {
+        return repository.findById(id)
+                .map(category -> CategoryMapper.toCategoryResponse(category));
     }
 
-    public Category saveCategory(Category category) {
-        return repository.save(category);
+    public List<CategoryResponse> findAll() {
+        List<Category> categories = repository.findAll();
+        return categories.stream()
+                .map(category -> CategoryMapper.toCategoryResponse(category))
+                .toList();
     }
 
     public void deleteCategoryById(Long id) {
