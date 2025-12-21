@@ -64,4 +64,15 @@ public class MovieService {
                 .toList();
     }
 
+    public MovieResponse update(Long id, MovieRequest request) {
+        Movie movie = MovieMapper.toMovie(request);
+
+        movie.setId(id);
+        movie.setCategories(this.findCategories(movie.getCategories()));
+        movie.setStreamings(this.findStreamings(movie.getStreamings()));
+
+        movieRepository.save(movie);
+        return MovieMapper.toMovieResponse(movie);
+    }
+
 }

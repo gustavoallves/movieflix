@@ -35,6 +35,13 @@ public class MovieController {
         return ResponseEntity.ok(movieService.findAll());
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<MovieResponse> update(@PathVariable Long id, @RequestBody MovieRequest movieRequest) {
+        return movieService.findById(id)
+                .map(movieUpdate -> ResponseEntity.ok(movieService.update(id, movieRequest)))
+                .orElse(ResponseEntity.notFound().build());
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteMovie(@PathVariable Long id) {
         movieService.delete(id);
