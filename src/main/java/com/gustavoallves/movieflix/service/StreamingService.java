@@ -25,13 +25,13 @@ public class StreamingService {
 
     public Optional<StreamingResponse> findById(Long id) {
         return repository.findById(id)
-                .map(streaming -> StreamingMapper.toStreamingResponse(streaming));
+                .map(StreamingMapper::toStreamingResponse);
     }
 
     public List<StreamingResponse> findAll() {
         List<Streaming> streamingList = repository.findAll();
             return streamingList.stream()
-                    .map(streaming -> StreamingMapper.toStreamingResponse(streaming))
+                    .map(StreamingMapper::toStreamingResponse)
                     .toList();
     }
 

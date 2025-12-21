@@ -25,13 +25,13 @@ public class CategoryService {
 
     public Optional<CategoryResponse> findById(Long id) {
         return repository.findById(id)
-                .map(category -> CategoryMapper.toCategoryResponse(category));
+                .map(CategoryMapper::toCategoryResponse);
     }
 
     public List<CategoryResponse> findAll() {
         List<Category> categories = repository.findAll();
         return categories.stream()
-                .map(category -> CategoryMapper.toCategoryResponse(category))
+                .map(CategoryMapper::toCategoryResponse)
                 .toList();
     }
 
