@@ -26,11 +26,8 @@ public class MovieService {
     public MovieResponse save(MovieRequest request) {
         Movie movie = MovieMapper.toMovie(request);
 
-        List<Category> categories = findCategories(movie.getCategories());
-        movie.setCategories(categories);
-
-        List<Streaming> streamings = findStreamings(movie.getStreamings());
-        movie.setStreamings(streamings);
+        movie.setCategories(this.findCategories(movie.getCategories()));
+        movie.setStreamings(this.findStreamings(movie.getStreamings()));
 
         movieRepository.save(movie);
         return MovieMapper.toMovieResponse(movie);
